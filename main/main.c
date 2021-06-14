@@ -34,7 +34,6 @@
 
 
 
-
 /*
 SPI receiver (slave) example.
 
@@ -66,7 +65,7 @@ Pins in use. The SPI Master can use the GPIO mux, so feel free to change these i
 
 #ifdef CONFIG_IDF_TARGET_ESP32
 #define SENDER_HOST    HSPI_HOST
-#define RCV_HOST VSPI_HOST
+#define RCV_HOST       VSPI_HOST
 #define DMA_CHAN_S    1
 #define DMA_CHAN_M    2
 #endif
@@ -131,7 +130,7 @@ void spi_master_task( void * handle_ptr )
         //Wait for slave to be ready for next byte before sending
         xSemaphoreTake(rdySem, portMAX_DELAY); //Wait until slave is ready
         ret_m=spi_device_transmit(*((spi_device_handle_t*)handle_ptr), &t_master);
-        if(ret_m==ESP_OK) printf("udana\n");
+        if(ret_m==ESP_OK) printf("\ttransmisja udana\n");
         printf("Received(master): %s\n", recvbuf_master);
         n++;
         vTaskDelay(100);
@@ -144,7 +143,7 @@ void spi_slave_task( void * spi_s_t )
     static int n;
     static char sendbuf_slave[129];
     static char recvbuf_slave[129];
-    static spi_transaction_t t_slave;
+    static spi_slave_transaction_t t_slave;
     for( ;; )
     {
         // SPI slave
@@ -157,15 +156,16 @@ void spi_slave_task( void * spi_s_t )
         t_slave.length=128*8;
         t_slave.tx_buffer=sendbuf_slave;
         t_slave.rx_buffer=recvbuf_slave;
+        
         /* This call enables the SPI slave interface to send/receive to the sendbuf and recvbuf. The transaction is
         initialized by the SPI master, however, so it will not actually happen until the master starts a hardware transaction
         by pulling CS low and pulsing the clock etc. In this specific example, we use the handshake line, pulled up by the
         .post_setup_cb callback that is called as soon as a transaction is ready, to let the master know it is free to transfer
         data.
         */
-        printf("odbior slave'a\n");
+        
         ret=spi_slave_transmit(RCV_HOST, &t_slave, portMAX_DELAY);
-        if(ret==ESP_OK) printf("udana\n");
+        if(ret==ESP_OK) printf("\ttransmisja udana\n");
         //spi_slave_transmit does not return until the master has done a transmission, so by here we have sent our data and
         //received data from the master. Print it.
         printf("Received(slave): %s\n", recvbuf_slave);
@@ -239,7 +239,7 @@ void app_main(void)
 
     // SPI master
     esp_err_t ret_m;
-    spi_device_handle_t handle;
+    static spi_device_handle_t handle;
 
     //Configuration for the SPI bus
     spi_bus_config_t buscfg_master={
@@ -295,11 +295,9 @@ void app_main(void)
     //Assume the slave is ready for the first transmission: if the slave started up before us, we will not detect
     //positive edge on the handshake line.
     xSemaphoreGive(rdySem);
-
-    printf("dotychczas ok\n");
-
-    xTaskCreate(spi_master_task, "SPI_master", 8192, (void*)&handle, 0, NULL);
+    
     xTaskCreate(spi_slave_task, "SPI_slave", 8192, NULL, 0, NULL);
+    xTaskCreate(spi_master_task, "SPI_master", 8192, &handle, 0, NULL);
 
 }
 

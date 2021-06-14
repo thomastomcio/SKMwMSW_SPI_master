@@ -1,18 +1,11 @@
-Master SPI - czêœæ projektu na przedmiot SKMwMSW
+Master SPI - czï¿½ï¿½ projektu na przedmiot SKMwMSW
 ========================
-Projekt zak³ada stworzenie programowe interfejsu odbiornika w standardzie SPI na urz¹dzeniu ESP-32.
+Projekt zakï¿½ada stworzenie programowe interfejsu odbiornika w standardzie SPI na urzï¿½dzeniu ESP-32.
 
+Poszczegï¿½lne komponenty caï¿½ego systemu:
 
-=======================
-Poszczególne komponenty ca³ego systemu:
-
-(STM32) Odbiór danych z czujnika pola magnetycznego i przesy³anie ich przez interfejs SPI:
-https://github.com/Phyteon/STM32_Comm  !!!! zmieniæ w razie pomy³ki !!!!
+(STM32) Odbiï¿½r danych z czujnika pola magnetycznego i przesyï¿½anie ich przez interfejs SPI:
+https://github.com/Phyteon/STM32_Comm  !!!! zmieniï¿½ w razie pomyï¿½ki !!!!
 
 (ESP-32) Serwer HTTPS wykorzystany do prezentacji otrzymanych danych z transmisji SPI.
-!!!! dodaæ adres !!!!
-
-
-
-
-
+!!!! dodaï¿½ adres !!!!

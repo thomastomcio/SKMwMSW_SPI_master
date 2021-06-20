@@ -12,6 +12,8 @@
 #include "freertos/semphr.h"
 #include "freertos/queue.h"
 
+#include "http_server.h"
+
 #define GPIO_HANDSHAKE_SLAVE 2 
 #define GPIO_HANDSHAKE_MASTER 4
 

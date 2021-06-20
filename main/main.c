@@ -47,7 +47,10 @@
 #define DMA_CHAN_M    2
 #endif
 
+// extern xQueueHandle rdySem;
 extern xQueueHandle rdySem;
+
+extern int pomiar;
 
 //Main application
 void app_main(void)

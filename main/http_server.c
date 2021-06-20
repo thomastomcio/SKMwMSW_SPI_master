@@ -1,6 +1,6 @@
 #include "http_server.h"
 
-#define HEADER_FORMAT_STRING  "<h1>Odczyt z czujnika pola magnetycznego: <p>wartosc odebrana przez SPI slave'a: %d</p></h1>"
+#define HEADER_FORMAT_STRING  "<h1>Odczyt z czujnika pola magnetycznego: <p>wartosc odebrana: %d</p></h1>"
 
 int pomiar = 0;
 

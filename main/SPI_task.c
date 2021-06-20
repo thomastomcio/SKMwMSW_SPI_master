@@ -60,7 +60,7 @@ void spi_master_task( void * handle_ptr )
         // if(ret_m==ESP_OK) printf("\ttransmisja udana\n");
         printf("(Master): %s\n", recvbuf_master);
         n++;
-        vTaskDelay(1000);
+        vTaskDelay(300);
     }
 }
 
@@ -101,6 +101,6 @@ void spi_slave_task( void * spi_s_t )
         // printf("(Slave): %s\n", recvbuf_slave);
         printf("(Slave): send data = %d\n", pomiar);
         n++;
-        vTaskDelay(1000);
+        vTaskDelay(300);
     }
 }
